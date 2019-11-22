@@ -140,6 +140,8 @@ bool HelloWorld::init()
 	m_pProgram->updateUniforms();
 	error = glGetError();
 
+	//îwåiêFÇê›íË
+	Director::getInstance()->setClearColor(Color4F(0, 1, 0, 0));
 
     return true;
 }
@@ -161,6 +163,21 @@ void HelloWorld::menuCloseCallback(Ref* pSender)
 
 void HelloWorld::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
 {
+	//çáê¨Ç»Çµ
+	//glBlendFunc(GL_ONE, GL_ZERO);
+
+	//â¡éZçáê¨
+	//glBlendFunc(GL_ONE, GL_ONE);
+
+	//å∏éZçáê¨
+	//glBlendEquation(GL_FUNC_REVERSE_SUBTRACT);
+	//glBlendFunc(GL_ONE, GL_ONE);
+	//glBlendEquation(GL_FUNC_ADD);
+
+	//îºìßñæçáê¨
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+
 	GLenum error;
 
 	GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_COLOR);
@@ -171,7 +188,7 @@ void HelloWorld::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
 
 	//Vec3 pos[6];
 	Vec3 pos[4];
-	Vec3 color[4];
+	Vec4 color[4];
 	const float x = 0.5f;
 	const float y = 0.5f;
 
@@ -187,19 +204,39 @@ void HelloWorld::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
 	pos[2] = Vec3(x, -y, 0);
 	pos[3] = Vec3(x, y, 0);
 
-	color[0] = Vec3(0, 0, 0);  //çï
-	color[1] = Vec3(1, 0, 0);  //ê‘
-	color[2] = Vec3(0, 1, 0);  //óŒ
-	color[3] = Vec3(0, 0, 1);  //ê¬
+	//color[0] = Vec3(0, 0, 0);  //çï
+	//color[1] = Vec3(1, 0, 0);  //ê‘
+	//color[2] = Vec3(0, 1, 0);  //óŒ
+	//color[3] = Vec3(0, 0, 1);  //ê¬
+
+	color[0] = Vec4(1, 0, 0, 1);
+	color[1] = Vec4(1, 0, 0, 1);
+	color[2] = Vec4(1, 0, 0, 1);
+	color[3] = Vec4(1, 0, 0, 1);
 
 
 	glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, pos);
 	//error = glGetError();
-	glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 3, GL_FLOAT, GL_FALSE, 0, color);
+	//glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 3, GL_FLOAT, GL_FALSE, 0, color);
+	glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, 0, color);
 
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, 1);
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	//glDrawArrays(GL_TRIANGLES, 3, 6);
 	//glDrawArrays(GL_QUADS, 0, 4);
 	error = glGetError();
+
+	pos[0].x += 0.1f; pos[0].y += 0.1f;
+	pos[1].x += 0.1f; pos[1].y += 0.1f;
+	pos[2].x += 0.1f; pos[2].y += 0.1f;
+	pos[3].x += 0.1f; pos[3].y += 0.1f;
+
+
+	color[0] = Vec4(0, 0, 1, 0.2f);
+	color[1] = Vec4(0, 0, 1, 0.2f);
+	color[2] = Vec4(0, 0, 1, 0.2f);
+	color[3] = Vec4(0, 0, 1, 0.2f);
+
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+	glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, 0, color);
 		
 }
