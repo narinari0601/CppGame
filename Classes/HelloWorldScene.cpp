@@ -178,6 +178,7 @@ void HelloWorld::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
 	pos[2] = Vec3(x, y, 0);
 	pos[3] = Vec3(x, -y, 0);
 
+
 	glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, pos);
 	error = glGetError();
 
