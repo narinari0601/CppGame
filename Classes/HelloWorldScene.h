@@ -48,6 +48,8 @@ public:
 	cocos2d::Texture2D* m_pTexture;
 
 	int counter = 0;
+
+	int uniform_wvp_matrix;
 };
 
 #endif // __HELLOWORLD_SCENE_H__
