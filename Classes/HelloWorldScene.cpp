@@ -189,7 +189,7 @@ void HelloWorld::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
 	//半透明合成
 	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	//counter++;
+	counter++;
 
 	GLenum error;
 
@@ -209,11 +209,17 @@ void HelloWorld::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
 	Vec2 uv[4];
 	const float x = 50.0f;
 	const float y = 50.0f;
+	const float z = 50.0f;
 
-	pos[0] = Vec3(-x, -y, 0);
-	pos[1] = Vec3(-x, y, 0);
-	pos[2] = Vec3(x, -y, 0);
-	pos[3] = Vec3(x, y, 0);
+	pos[0] = Vec3(-x, -y , +z);
+	pos[1] = Vec3(-x, +y , +z);
+	pos[2] = Vec3(+x, -y , +z);
+	pos[3] = Vec3(+x, +y , +z);
+
+	//pos[0] = Vec3(-x+400, -y+400, 0);
+	//pos[1] = Vec3(-x+400, y+400, 0);
+	//pos[2] = Vec3(x+400, -y+400, 0);
+	//pos[3] = Vec3(x+400, y+400, 0);
 
 
 	//pos[0] = Vec3(-x, -y, 0);
@@ -284,34 +290,69 @@ void HelloWorld::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
 	//GL::bindTexture2D(m_pTexture->getName());
 
 
-	//ワールドビュー
+	//ワールドビュープロジェクションの行列作成
 	static float yaw = 0.0f;
-	yaw += 0.01f;
+	yaw += CC_DEGREES_TO_RADIANS(5.0f);
 	Mat4 matProjection;
 	Mat4 matView;
 	Mat4 matWVP;
 	Mat4 matTrans, matScale, matRot, matWorld;
 
-
+	//プロジェクション行列(射影行列)を取得
 	matProjection = _director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
 
+	//ビュー行列を取得
 	matView = _director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 
-	Mat4::createTranslation(Vec3(250, 50, 0), &matTrans);
+	//平行移動行列を作成
+	Mat4::createTranslation(Vec3(1280/2, 720/2, 0), &matTrans);
 
+	//回転行列を作成
 	Mat4::createRotationY(yaw, &matRot);
 
-	Mat4::createScale(Vec3(1, 1, 1), &matScale);
+	//+1～+3倍で周回
+	//float scale = sinf(yaw) + 2.0f;
+	float scale = 1.0f;
 
+	//スケーリング行列を合成
+	Mat4::createScale(Vec3(scale, scale, scale), &matScale);
+
+	//ワールド行列を合成
 	matWorld = matTrans * matRot * matScale;
 
-	matWVP = matProjection * matView*matWorld;
+	//合成したWVP行列をシェーダーに送る
+	matWVP = matProjection * matView * matWorld;
 
 	glUniformMatrix4fv(uniform_wvp_matrix, 1, GL_FALSE, matWVP.m);
 
 
 	//glDrawArrays(GL_TRIANGLES, 0, 6);
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+	
 	//glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, 0, color);
+
+	//描画(前面)
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
+	//奥面
+	pos[0] = Vec3(-x, -y, -z);
+	pos[1] = Vec3(-x, +y, -z);
+	pos[2] = Vec3(+x, -y, -z);
+	pos[3] = Vec3(+x, +y, -z);
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
+	//左面
+	pos[0] = Vec3(-x, -y, -z);
+	pos[1] = Vec3(-x, -y, +z);
+	pos[2] = Vec3(-x, +y, -z);
+	pos[3] = Vec3(-x, +y, +z);
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
+	//右面
+	pos[0] = Vec3(+x, -y, -z);
+	pos[1] = Vec3(+x, -y, +z);
+	pos[2] = Vec3(+x, +y, -z);
+	pos[3] = Vec3(+x, +y, +z);
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
 	error = glGetError();
 }
