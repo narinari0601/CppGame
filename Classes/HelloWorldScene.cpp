@@ -1,18 +1,18 @@
 /****************************************************************************
  Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
- 
+
  http://www.cocos2d-x.org
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -29,92 +29,92 @@ USING_NS_CC;
 
 Scene* HelloWorld::createScene()
 {
-    return HelloWorld::create();
+	return HelloWorld::create();
 }
 
 // Print useful error message instead of segfaulting when files are not there.
 static void problemLoading(const char* filename)
 {
-    printf("Error while loading: %s\n", filename);
-    printf("Depending on how you compiled you might have to add 'Resources/' in front of filenames in HelloWorldScene.cpp\n");
+	printf("Error while loading: %s\n", filename);
+	printf("Depending on how you compiled you might have to add 'Resources/' in front of filenames in HelloWorldScene.cpp\n");
 }
 
 // on "init" you need to initialize your instance
 bool HelloWorld::init()
 {
-    //////////////////////////////
-    // 1. super init first
-    if ( !Scene::init() )
-    {
-        return false;
-    }
+	//////////////////////////////
+	// 1. super init first
+	if (!Scene::init())
+	{
+		return false;
+	}
 
-    auto visibleSize = Director::getInstance()->getVisibleSize();
-    Vec2 origin = Director::getInstance()->getVisibleOrigin();
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-    /////////////////////////////
-    // 2. add a menu item with "X" image, which is clicked to quit the program
-    //    you may modify it.
+	/////////////////////////////
+	// 2. add a menu item with "X" image, which is clicked to quit the program
+	//    you may modify it.
 
-    // add a "close" icon to exit the progress. it's an autorelease object
-    auto closeItem = MenuItemImage::create(
-                                           "CloseNormal.png",
-                                           "CloseSelected.png",
-                                           CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
+	// add a "close" icon to exit the progress. it's an autorelease object
+	auto closeItem = MenuItemImage::create(
+		"CloseNormal.png",
+		"CloseSelected.png",
+		CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
 
-    if (closeItem == nullptr ||
-        closeItem->getContentSize().width <= 0 ||
-        closeItem->getContentSize().height <= 0)
-    {
-        problemLoading("'CloseNormal.png' and 'CloseSelected.png'");
-    }
-    else
-    {
-        float x = origin.x + visibleSize.width - closeItem->getContentSize().width/2;
-        float y = origin.y + closeItem->getContentSize().height/2;
-        closeItem->setPosition(Vec2(x,y));
-    }
+	if (closeItem == nullptr ||
+		closeItem->getContentSize().width <= 0 ||
+		closeItem->getContentSize().height <= 0)
+	{
+		problemLoading("'CloseNormal.png' and 'CloseSelected.png'");
+	}
+	else
+	{
+		float x = origin.x + visibleSize.width - closeItem->getContentSize().width / 2;
+		float y = origin.y + closeItem->getContentSize().height / 2;
+		closeItem->setPosition(Vec2(x, y));
+	}
 
-    // create menu, it's an autorelease object
-    auto menu = Menu::create(closeItem, NULL);
-    menu->setPosition(Vec2::ZERO);
-    this->addChild(menu, 1);
+	// create menu, it's an autorelease object
+	auto menu = Menu::create(closeItem, NULL);
+	menu->setPosition(Vec2::ZERO);
+	this->addChild(menu, 1);
 
-    /////////////////////////////
-    // 3. add your codes below...
+	/////////////////////////////
+	// 3. add your codes below...
 
-    // add a label shows "Hello World"
-    // create and initialize a label
+	// add a label shows "Hello World"
+	// create and initialize a label
 
-    auto label = Label::createWithTTF("Hello World", "fonts/Marker Felt.ttf", 24);
-    if (label == nullptr)
-    {
-        problemLoading("'fonts/Marker Felt.ttf'");
-    }
-    else
-    {
-        // position the label on the center of the screen
-        label->setPosition(Vec2(origin.x + visibleSize.width/2,
-                                origin.y + visibleSize.height - label->getContentSize().height));
+	auto label = Label::createWithTTF("Hello World", "fonts/Marker Felt.ttf", 24);
+	if (label == nullptr)
+	{
+		problemLoading("'fonts/Marker Felt.ttf'");
+	}
+	else
+	{
+		// position the label on the center of the screen
+		label->setPosition(Vec2(origin.x + visibleSize.width / 2,
+			origin.y + visibleSize.height - label->getContentSize().height));
 
-        // add the label as a child to this layer
-        this->addChild(label, 1);
-    }
+		// add the label as a child to this layer
+		this->addChild(label, 1);
+	}
 
-    // add "HelloWorld" splash screen"
-    auto sprite = Sprite::create("HelloWorld.png");
-    if (sprite == nullptr)
-    {
-        problemLoading("'HelloWorld.png'");
-    }
-    else
-    {
-        // position the sprite on the center of the screen
-        sprite->setPosition(Vec2(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
+	// add "HelloWorld" splash screen"
+	auto sprite = Sprite::create("HelloWorld.png");
+	if (sprite == nullptr)
+	{
+		problemLoading("'HelloWorld.png'");
+	}
+	else
+	{
+		// position the sprite on the center of the screen
+		sprite->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
 
-        // add the sprite as a child to this layer
-        //this->addChild(sprite, 0);
-    }
+		// add the sprite as a child to this layer
+		//this->addChild(sprite, 0);
+	}
 
 
 	GLenum error;
@@ -146,28 +146,28 @@ bool HelloWorld::init()
 	//背景色を設定
 	//Director::getInstance()->setClearColor(Color4F(0, 1, 0, 0));
 
-	
+
 	//uniform_sampler = glGetUniformLocation(m_pProgram->getProgram(), "sampler");
 
-	
+
 	//m_pTexture = Director::getInstance()->getTextureCache()->addImage("banana00.png");
 
 
 	uniform_wvp_matrix = glGetUniformLocation(m_pProgram->getProgram(), "u_wvp_matrix");
 
-    return true;
+	return true;
 }
 
 
 void HelloWorld::menuCloseCallback(Ref* pSender)
 {
-    //Close the cocos2d-x game scene and quit the application
-    Director::getInstance()->end();
+	//Close the cocos2d-x game scene and quit the application
+	Director::getInstance()->end();
 
-    /*To navigate back to native iOS screen(if present) without quitting the application  ,do not use Director::getInstance()->end() as given above,instead trigger a custom event created in RootViewController.mm as below*/
+	/*To navigate back to native iOS screen(if present) without quitting the application  ,do not use Director::getInstance()->end() as given above,instead trigger a custom event created in RootViewController.mm as below*/
 
-    //EventCustom customEndEvent("game_scene_close_event");
-    //_eventDispatcher->dispatchEvent(&customEndEvent);
+	//EventCustom customEndEvent("game_scene_close_event");
+	//_eventDispatcher->dispatchEvent(&customEndEvent);
 
 
 }
@@ -175,121 +175,52 @@ void HelloWorld::menuCloseCallback(Ref* pSender)
 
 void HelloWorld::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
 {
-	//合成なし
-	//glBlendFunc(GL_ONE, GL_ZERO);
 
-	//加算合成
-	//glBlendFunc(GL_ONE, GL_ONE);
+	_customCommand.init(_globalZOrder, transform, flags);
+	_customCommand.func = CC_CALLBACK_0(HelloWorld::onDraw, this, transform, flags);
+	renderer->addCommand(&_customCommand);
 
-	//減算合成
-	//glBlendEquation(GL_FUNC_REVERSE_SUBTRACT);
-	//glBlendFunc(GL_ONE, GL_ONE);
-	//glBlendEquation(GL_FUNC_ADD);
+	for (int i = 0; i < 4; i++)
+	{
+		Vec4 _pos;
+		_pos.x = uv[i].x; _pos.y = uv[i].y; _pos.z = _positionZ;
+		_pos.w = 1;
+		_modelViewTransform.transformVector(&_pos);
+		pos[i] = Vec3(_pos.x, _pos.y, _pos.z) / _pos.w;
+	}
 
-	//半透明合成
-	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+}
 
+void HelloWorld::onDraw(const cocos2d::Mat4& transform, uint32_t /*flags*/)
+{
 	counter++;
 
 	GLenum error;
 
-	GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_COLOR );
-
-	//GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_COLOR |
-	//	GL::VERTEX_ATTRIB_FLAG_TEX_COORD);
-
-
-	error = glGetError();
-
 	m_pProgram->use();
-	error = glGetError();
-
-	Vec3 pos[4];
-	Vec4 color[4];
-	Vec2 uv[4];
-	const float x = 50.0f;
-	const float y = 50.0f;
-	const float z = 50.0f;
-
-	pos[0] = Vec3(-x, -y , +z);
-	pos[1] = Vec3(-x, +y , +z);
-	pos[2] = Vec3(+x, -y , +z);
-	pos[3] = Vec3(+x, +y , +z);
-
-	//pos[0] = Vec3(-x+400, -y+400, 0);
-	//pos[1] = Vec3(-x+400, y+400, 0);
-	//pos[2] = Vec3(x+400, -y+400, 0);
-	//pos[3] = Vec3(x+400, y+400, 0);
+	m_pProgram->setUniformsForBuiltins(transform);
+	GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_COLOR);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 
-	//pos[0] = Vec3(-x, -y, 0);
-	//pos[1] = Vec3(-x, y, 0);
-	//pos[2] = Vec3(x, -y, 0);
-	//pos[3] = Vec3(x, y, 0);
-	//pos[4] = Vec3(-x, y, 0);
-	//pos[5] = Vec3(x, -y, 0);
+	pos[0] = Vec3(-x, -y, +z);
+	pos[1] = Vec3(-x, +y, +z);
+	pos[2] = Vec3(+x, -y, +z);
+	pos[3] = Vec3(+x, +y, +z);
 
-	color[0] = Vec4(1, 0, 0, 1);  
-	color[1] = Vec4(1, 0, 0 ,1);  
-	color[2] = Vec4(1, 0, 0 ,1);  
-	color[3] = Vec4(1, 0, 0 ,1);  
-
-	//color[0] = Vec4(1, 0, 0, 1);
-	//color[1] = Vec4(0, 1, 0, 1);
-	//color[2] = Vec4(1, 0, 1, 1);
-	//color[3] = Vec4(1, 1, 1, 1);
-	//color[4] = Vec4(0, 1, 0, 1);
-	//color[5] = Vec4(1, 0, 1, 1);
+	color[0] = Vec4(1, 0, 0, 1);
+	color[1] = Vec4(1, 0, 0, 1);
+	color[2] = Vec4(1, 0, 0, 1);
+	color[3] = Vec4(1, 0, 0, 1);
 
 	uv[0] = Vec2(0, 1);
 	uv[1] = Vec2(0, 0);
 	uv[2] = Vec2(1, 1);
 	uv[3] = Vec2(1, 0);
-	//uv[4] = Vec2(0, 0);
-	//uv[5] = Vec2(1, 1);
-
-	//4_1やってみよう1
-	//uv[0] = Vec2(0+counter/600.0f, 1);
-	//uv[1] = Vec2(0+counter/600.0f, 0);
-	//uv[2] = Vec2(1+counter/600.0f, 1);
-	//uv[3] = Vec2(1+counter/600.0f, 0);
-
-	//4_1やってみよう2
-	//uv[0] = Vec2(0 - counter / 600.0f, 1 + counter / 600.0f);
-	//uv[1] = Vec2(0 - counter / 600.0f, 0 + counter / 600.0f);
-	//uv[2] = Vec2(1 - counter / 600.0f, 1 + counter / 600.0f);
-	//uv[3] = Vec2(1 + counter / 600.0f, 0 - counter / 600.0f);
-	//uv[4] = Vec2(0 + counter / 600.0f, 0 - counter / 600.0f);
-	//uv[5] = Vec2(1 + counter / 600.0f, 1 - counter / 600.0f);
 
 	glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, pos);
-	//error = glGetError();
-	//glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 3, GL_FLOAT, GL_FALSE, 0, color);
 	glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, 0, color);
-
-	//glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-	
-	//glDrawArrays(GL_QUADS, 0, 4);
-	//error = glGetError();
-
-	//pos[0].x += 0.1f; pos[0].y += 0.1f;
-	//pos[1].x += 0.1f; pos[1].y += 0.1f;
-	//pos[2].x += 0.1f; pos[2].y += 0.1f;
-	//pos[3].x += 0.1f; pos[3].y += 0.1f;
-
-
-	//color[0] = Vec4(0, 0, 1, 0.2f);
-	//color[1] = Vec4(0, 0, 1, 0.2f);
-	//color[2] = Vec4(0, 0, 1, 0.2f);
-	//color[3] = Vec4(0, 0, 1, 0.2f);
-
-	//指定した属性インデックスにデータを関連付ける
-	//glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 0, uv);
-
-	//glUniform1i(uniform_sampler, 0);
-	//GL::bindTexture2D(m_pTexture->getName());
-
-
+	//GL::blendFunc(_blendFunc.src, _blendFunc.dst);
 	//ワールドビュープロジェクションの行列作成
 	static float yaw = 0.0f;
 	yaw += CC_DEGREES_TO_RADIANS(5.0f);
@@ -305,14 +236,14 @@ void HelloWorld::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
 	matView = _director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 
 	//平行移動行列を作成
-	Mat4::createTranslation(Vec3(1280/2, 720/2, 0), &matTrans);
+	Mat4::createTranslation(Vec3(1280 / 2, 720 / 2, 0), &matTrans);
 
 	//回転行列を作成
 	Mat4::createRotationY(yaw, &matRot);
 
 	//+1～+3倍で周回
 	//float scale = sinf(yaw) + 2.0f;
-	float scale = 1.0f;
+	float scale = 3.0f;
 
 	//スケーリング行列を合成
 	Mat4::createScale(Vec3(scale, scale, scale), &matScale);
@@ -327,7 +258,7 @@ void HelloWorld::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
 
 
 	//glDrawArrays(GL_TRIANGLES, 0, 6);
-	
+
 	//glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, 0, color);
 
 	//描画(前面)
@@ -352,7 +283,14 @@ void HelloWorld::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
 	pos[1] = Vec3(+x, -y, +z);
 	pos[2] = Vec3(+x, +y, -z);
 	pos[3] = Vec3(+x, +y, +z);
+
+
+
+	
+
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
 	error = glGetError();
+
+	//CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, 4);
 }

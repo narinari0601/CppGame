@@ -26,6 +26,7 @@
 #define __HELLOWORLD_SCENE_H__
 
 #include "cocos2d.h"
+#include "SimpleAudioEngine.h"
 
 class HelloWorld : public cocos2d::Scene
 {
@@ -42,6 +43,8 @@ public:
 
 	void draw(cocos2d::Renderer *renderer, const cocos2d::Mat4& transform, uint32_t flags);
 
+	void onDraw(const cocos2d::Mat4& transform, uint32_t flags);
+
 	cocos2d::GLProgram* m_pProgram;
 
 	int uniform_sampler;
@@ -50,6 +53,19 @@ public:
 	int counter = 0;
 
 	int uniform_wvp_matrix;
+
+	cocos2d::CustomCommand _customCommand;
+
+	cocos2d::BlendFunc _blendFunc;
+
+	cocos2d::Vec3 pos[4];
+	cocos2d::Vec4 color[4];
+	cocos2d::Vec2 uv[4];
+
+	const float x = 50.0f;
+    const float y = 50.0f;
+    const float z = 50.0f;
+
 };
 
 #endif // __HELLOWORLD_SCENE_H__
