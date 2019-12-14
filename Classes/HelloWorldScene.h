@@ -28,15 +28,15 @@
 #include "cocos2d.h"
 #include "SimpleAudioEngine.h"
 
-class HelloWorld : public cocos2d::Scene
+class HelloWorld : public cocos2d::Node
 {
 public:
-    static cocos2d::Scene* createScene();
+    //static cocos2d::Scene* createScene();
 
     virtual bool init();
     
     // a selector callback
-    void menuCloseCallback(cocos2d::Ref* pSender);
+    //void menuCloseCallback(cocos2d::Ref* pSender);
     
     // implement the "static create()" method manually
     CREATE_FUNC(HelloWorld);
@@ -65,6 +65,8 @@ public:
 	const float x = 50.0f;
     const float y = 50.0f;
     const float z = 50.0f;
+
+	cocos2d::Mat4 matWVP;
 
 };
 
