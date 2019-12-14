@@ -22,25 +22,25 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "HelloWorldScene.h"
+#include "ShaderNode.h"
 #include "SimpleAudioEngine.h"
 
 USING_NS_CC;
 
-//Scene* HelloWorld::createScene()
+//Scene* ShaderNode::createScene()
 //{
-//	return HelloWorld::create();
+//	return ShaderNode::create();
 //}
 
 // Print useful error message instead of segfaulting when files are not there.
 //static void problemLoading(const char* filename)
 //{
 //	printf("Error while loading: %s\n", filename);
-//	printf("Depending on how you compiled you might have to add 'Resources/' in front of filenames in HelloWorldScene.cpp\n");
+//	printf("Depending on how you compiled you might have to add 'Resources/' in front of filenames in ShaderNodeScene.cpp\n");
 //}
 
 // on "init" you need to initialize your instance
-bool HelloWorld::init()
+bool ShaderNode::init()
 {
 	//////////////////////////////
 	// 1. super init first
@@ -98,11 +98,11 @@ bool HelloWorld::init()
 
 
 
-void HelloWorld::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
+void ShaderNode::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
 {
 
 	_customCommand.init(_globalZOrder, transform, flags);
-	_customCommand.func = CC_CALLBACK_0(HelloWorld::onDraw, this, transform, flags);
+	_customCommand.func = CC_CALLBACK_0(ShaderNode::onDraw, this, transform, flags);
 	renderer->addCommand(&_customCommand);
 
 
@@ -156,7 +156,7 @@ void HelloWorld::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
 
 }
 
-void HelloWorld::onDraw(const cocos2d::Mat4& transform, uint32_t /*flags*/)
+void ShaderNode::onDraw(const cocos2d::Mat4& transform, uint32_t /*flags*/)
 {
 
 	GLenum error;

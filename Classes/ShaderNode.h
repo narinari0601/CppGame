@@ -28,7 +28,7 @@
 #include "cocos2d.h"
 #include "SimpleAudioEngine.h"
 
-class HelloWorld : public cocos2d::Node
+class ShaderNode : public cocos2d::Node
 {
 public:
     //static cocos2d::Scene* createScene();
@@ -39,7 +39,7 @@ public:
     //void menuCloseCallback(cocos2d::Ref* pSender);
     
     // implement the "static create()" method manually
-    CREATE_FUNC(HelloWorld);
+    CREATE_FUNC(ShaderNode);
 
 	void draw(cocos2d::Renderer *renderer, const cocos2d::Mat4& transform, uint32_t flags);
 
