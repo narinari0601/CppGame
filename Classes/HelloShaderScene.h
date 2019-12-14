@@ -14,8 +14,12 @@ public:
 	// a selector callback
 	void menuCloseCallback(cocos2d::Ref* pSender);
 
+	bool onTouchBegin(cocos2d::Touch* touch, cocos2d::Event* event);
+	void onTouchMoved(cocos2d::Touch * touch, cocos2d::Event * event);
 	// implement the "static create()" method manually
 	CREATE_FUNC(HelloShader);
 
 	cocos2d::CustomCommand _customCommand;
+
+	cocos2d::Node* node;
 };

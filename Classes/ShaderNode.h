@@ -45,6 +45,8 @@ public:
 
 	void onDraw(const cocos2d::Mat4& transform, uint32_t flags);
 
+	bool onTouchBegin(cocos2d::Touch* touch, cocos2d::Event* event);
+
 	cocos2d::GLProgram* m_pProgram;
 
 	int uniform_sampler;

@@ -92,6 +92,9 @@ bool ShaderNode::init()
 
 	uniform_wvp_matrix = glGetUniformLocation(m_pProgram->getProgram(), "u_wvp_matrix");
 
+
+	
+
 	return true;
 }
 
@@ -100,21 +103,34 @@ bool ShaderNode::init()
 
 void ShaderNode::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
 {
+	//コンテンツサイズを取得
+	Size size = getContentSize();
+
+	//座標を1点ずつ設定
+	pos[0] = Vec3(-size.width / 2.0f, -size.height / 4.0f, 0);
+	pos[1] = Vec3(-size.width / 2.0f, +size.height / 4.0f, 0);
+	pos[2] = Vec3(+size.width / 2.0f, -size.height / 4.0f, 0);
+	pos[3] = Vec3(+size.width / 2.0f, +size.height / 4.0f, 0);
+
+	color[0] = Vec4(_realColor.r / 255.0f, _realColor.g / 255.0f, _realColor.b / 255.0f, _realOpacity / 255.0f);
+	color[1] = Vec4(_realColor.r / 255.0f, _realColor.g / 255.0f, _realColor.b / 255.0f, _realOpacity / 255.0f);
+	color[2] = Vec4(_realColor.r / 255.0f, _realColor.g / 255.0f, _realColor.b / 255.0f, _realOpacity / 255.0f);
+	color[3] = Vec4(_realColor.r / 255.0f, _realColor.g / 255.0f, _realColor.b / 255.0f, _realOpacity / 255.0f);
 
 	_customCommand.init(_globalZOrder, transform, flags);
 	_customCommand.func = CC_CALLBACK_0(ShaderNode::onDraw, this, transform, flags);
 	renderer->addCommand(&_customCommand);
 
 
-	pos[0] = Vec3(-x, -y, 0);
-	pos[1] = Vec3(-x, +y, 0);
-	pos[2] = Vec3(+x, -y, 0);
-	pos[3] = Vec3(+x, +y, 0);
+	//pos[0] = Vec3(-x, -y, 0);
+	//pos[1] = Vec3(-x, +y, 0);
+	//pos[2] = Vec3(+x, -y, 0);
+	//pos[3] = Vec3(+x, +y, 0);
 
-	color[0] = Vec4(1, 0, 0, 1);
-	color[1] = Vec4(1, 0, 0, 1);
-	color[2] = Vec4(1, 0, 0, 1);
-	color[3] = Vec4(1, 0, 0, 1);
+	//color[0] = Vec4(1, 0, 0, 1);
+	//color[1] = Vec4(1, 0, 0, 1);
+	//color[2] = Vec4(1, 0, 0, 1);
+	//color[3] = Vec4(1, 0, 0, 1);
 
 	uv[0] = Vec2(0, 1);
 	uv[1] = Vec2(0, 0);
@@ -123,36 +139,37 @@ void ShaderNode::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
 
 
 	//ワールドビュープロジェクションの行列作成
-	static float yaw = 0.0f;
-	yaw += CC_DEGREES_TO_RADIANS(5.0f);
+	//static float yaw = 0.0f;
+	//yaw += CC_DEGREES_TO_RADIANS(5.0f);
 	Mat4 matProjection;
-	Mat4 matView;
-	Mat4 matTrans, matScale, matRot, matWorld;
+	//Mat4 matView;
+	//Mat4 matTrans, matScale, matRot, matWorld;
 
 	//プロジェクション行列(射影行列)を取得
 	matProjection = _director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
 
-	//ビュー行列を取得
-	matView = _director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+	////ビュー行列を取得
+	//matView = _director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 
-	//平行移動行列を作成
-	Mat4::createTranslation(Vec3(1280 / 2, 720 / 2, 0), &matTrans);
+	////平行移動行列を作成
+	//Mat4::createTranslation(Vec3(1280 / 2, 720 / 2, 0), &matTrans);
 
-	//回転行列を作成
-	Mat4::createRotationY(yaw, &matRot);
+	////回転行列を作成
+	//Mat4::createRotationY(yaw, &matRot);
 
-	//+1～+3倍で周回
-	//float scale = sinf(yaw) + 2.0f;
-	float scale = 3.0f;
+	////+1～+3倍で周回
+	////float scale = sinf(yaw) + 2.0f;
+	//float scale = 3.0f;
 
-	//スケーリング行列を合成
-	Mat4::createScale(Vec3(scale, scale, scale), &matScale);
+	////スケーリング行列を合成
+	//Mat4::createScale(Vec3(scale, scale, scale), &matScale);
 
-	//ワールド行列を合成
-	matWorld = matTrans * matRot * matScale;
+	////ワールド行列を合成
+	//matWorld = matTrans * matRot * matScale;
 
-	//合成したWVP行列をシェーダーに送る
-	matWVP = matProjection * matView * matWorld;
+	////合成したWVP行列をシェーダーに送る
+	//matWVP = matProjection * matView * matWorld;
+	matWVP = matProjection * transform;
 
 }
 
@@ -182,4 +199,12 @@ void ShaderNode::onDraw(const cocos2d::Mat4& transform, uint32_t /*flags*/)
 
 	error = glGetError();
 
+}
+
+bool ShaderNode::onTouchBegin(cocos2d::Touch * touch, cocos2d::Event * event)
+{
+	auto touchPos = touch->getLocation();
+
+
+	return true;
 }

@@ -77,14 +77,27 @@ bool HelloShader::init()
 	this->addChild(sprite, 0);
 
 	// LayerColor‚ÌŽg—p—á
-	LayerColor* layerColor = LayerColor::create(Color4B(255, 255, 0, 255), 500, 500);
-	this->addChild(layerColor, 2);
+	//LayerColor* layerColor = LayerColor::create(Color4B(255, 255, 0, 255), 500, 500);
+	//this->addChild(layerColor, 2);
 
 	// ShaderNode‚ðì¬B•`‰æ—Dæ‚Í1
-	Node* node = ShaderNode::create();
+	node = ShaderNode::create();
+	node->setContentSize(Size(500, 500));
 	this->addChild(node, 1);
+	node->setPosition(300, 500);
+	node->setOpacity(128);
+	//MoveTo* action01=MoveTo::create(onTouchMoved)
+
+	//node->setRotation(45.0f);
+	//node->setScale(3.0f, 5.0f);
+	//node->setColor(Color3B(0, 255, 0));
 
 	Sprite* spriteA = Sprite::create("HelloWorld.png");
+	//node->addChild(spriteA);
+
+	this -> addChild(spriteA, 2);
+	spriteA->setPosition(400, 300);
+
 	//Sprite* spriteB;
 	//Sprite* spriteC;
 
@@ -92,6 +105,13 @@ bool HelloShader::init()
 	//scene->addChild(spriteA, 2);
 	//scene->addChild(spriteB, 0);
 	//scene->addChild(spriteC, 1);
+
+	auto listener = EventListenerTouchOneByOne::create();
+
+	listener->onTouchBegan = CC_CALLBACK_2(HelloShader::onTouchBegin, this);
+	listener->onTouchMoved = CC_CALLBACK_2(HelloShader::onTouchMoved, this);
+
+	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
 
 	return true;
 }
@@ -103,4 +123,18 @@ void HelloShader::menuCloseCallback(Ref* pSender)
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 	exit(0);
 #endif
+}
+
+bool HelloShader::onTouchBegin(cocos2d::Touch * touch, cocos2d::Event * event)
+{
+	
+
+	return true;
+}
+
+void HelloShader::onTouchMoved(cocos2d::Touch * touch, cocos2d::Event * event)
+{
+	auto touchPos = touch->getLocation();
+
+	node ->setPosition(touchPos);
 }
