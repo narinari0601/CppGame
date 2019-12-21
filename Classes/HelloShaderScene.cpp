@@ -110,6 +110,8 @@ bool HelloShader::init()
 
 	listener->onTouchBegan = CC_CALLBACK_2(HelloShader::onTouchBegin, this);
 	listener->onTouchMoved = CC_CALLBACK_2(HelloShader::onTouchMoved, this);
+	listener->onTouchEnded = CC_CALLBACK_2(HelloShader::onTouchEnded, this);
+	listener->onTouchCancelled = CC_CALLBACK_2(HelloShader::onTouchEnded, this);
 
 	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
 
@@ -127,7 +129,9 @@ void HelloShader::menuCloseCallback(Ref* pSender)
 
 bool HelloShader::onTouchBegin(cocos2d::Touch * touch, cocos2d::Event * event)
 {
-	
+	auto touchPos = touch->getLocation();
+
+	node->setPosition(touchPos);
 
 	return true;
 }
@@ -137,4 +141,9 @@ void HelloShader::onTouchMoved(cocos2d::Touch * touch, cocos2d::Event * event)
 	auto touchPos = touch->getLocation();
 
 	node ->setPosition(touchPos);
+}
+
+void HelloShader::onTouchEnded(cocos2d::Touch * touch, cocos2d::Event * event)
+{
+
 }

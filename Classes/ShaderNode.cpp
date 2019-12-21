@@ -201,10 +201,4 @@ void ShaderNode::onDraw(const cocos2d::Mat4& transform, uint32_t /*flags*/)
 
 }
 
-bool ShaderNode::onTouchBegin(cocos2d::Touch * touch, cocos2d::Event * event)
-{
-	auto touchPos = touch->getLocation();
 
-
-	return true;
-}
