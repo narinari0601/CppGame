@@ -44,4 +44,14 @@
       <Filter>resource</Filter>
     </ResourceCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Resources\Shaders\flower.fsh">
+      <Filter>src</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\Resources\Shaders\flower.vsh">
+      <Filter>src</Filter>
+    </FxCompile>
+  </ItemGroup>
 </Project>

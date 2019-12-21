@@ -74,7 +74,7 @@ bool HelloShader::init()
 	sprite->setColor(Color3B(0xff, 0x00, 0x00));
 	sprite->setScale(2.0f);
 	sprite->setPosition(Vec2(visibleSize.width/2 + origin.x + 200, visibleSize.height/2 + origin.y));
-	this->addChild(sprite, 0);
+	//this->addChild(sprite, 0);
 
 	// LayerColor‚ÌŽg—p—á
 	//LayerColor* layerColor = LayerColor::create(Color4B(255, 255, 0, 255), 500, 500);
@@ -82,10 +82,10 @@ bool HelloShader::init()
 
 	// ShaderNode‚ðì¬B•`‰æ—Dæ‚Í1
 	node = ShaderNode::create();
-	node->setContentSize(Size(500, 500));
+	node->setContentSize(Size(700, 500));
 	this->addChild(node, 1);
 	node->setPosition(300, 500);
-	node->setOpacity(128);
+	//node->setOpacity(128);
 	//MoveTo* action01=MoveTo::create(onTouchMoved)
 
 	//node->setRotation(45.0f);
@@ -95,7 +95,7 @@ bool HelloShader::init()
 	Sprite* spriteA = Sprite::create("HelloWorld.png");
 	//node->addChild(spriteA);
 
-	this -> addChild(spriteA, 2);
+	//this -> addChild(spriteA, 2);
 	spriteA->setPosition(400, 300);
 
 	//Sprite* spriteB;

@@ -69,6 +69,9 @@ public:
 
 	cocos2d::Mat4 matWVP;
 
+	int uniform_center;
+	int uniform_size_div2;
+
 };
 
 #endif // __HELLOWORLD_SCENE_H__

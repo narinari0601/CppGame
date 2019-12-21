@@ -58,7 +58,7 @@ bool ShaderNode::init()
 
 	m_pProgram = new GLProgram;
 
-	m_pProgram->initWithFilenames("shaders/shader_0tex.vsh", "shaders/shader_0tex.fsh");
+	m_pProgram->initWithFilenames("shaders/flower.vsh", "shaders/flower.fsh");
 	error = glGetError();
 
 	//attribute変数に属性インデックスを割り振る
@@ -68,7 +68,7 @@ bool ShaderNode::init()
 	//atttibute変数に属性インデックスを割り振る
 	m_pProgram->bindAttribLocation("a_color", GLProgram::VERTEX_ATTRIB_COLOR);
 	error = glGetError();
-
+	
 	//m_pProgram->bindAttribLocation("a_texCoord", GLProgram::VERTEX_ATTRIB_TEX_COORD);
 	//error = glGetError();
 
@@ -93,7 +93,9 @@ bool ShaderNode::init()
 	uniform_wvp_matrix = glGetUniformLocation(m_pProgram->getProgram(), "u_wvp_matrix");
 
 
-	
+	uniform_center = glGetUniformLocation(m_pProgram->getProgram(), "center");
+
+	uniform_size_div2= glGetUniformLocation(m_pProgram->getProgram(), "size_div2");
 
 	return true;
 }
@@ -107,10 +109,10 @@ void ShaderNode::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
 	Size size = getContentSize();
 
 	//座標を1点ずつ設定
-	pos[0] = Vec3(-size.width / 2.0f, -size.height / 4.0f, 0);
-	pos[1] = Vec3(-size.width / 2.0f, +size.height / 4.0f, 0);
-	pos[2] = Vec3(+size.width / 2.0f, -size.height / 4.0f, 0);
-	pos[3] = Vec3(+size.width / 2.0f, +size.height / 4.0f, 0);
+	pos[0] = Vec3(-size.width / 2.0f, -size.height / 2.0f, 0);
+	pos[1] = Vec3(-size.width / 2.0f, +size.height / 2.0f, 0);
+	pos[2] = Vec3(+size.width / 2.0f, -size.height / 2.0f, 0);
+	pos[3] = Vec3(+size.width / 2.0f, +size.height / 2.0f, 0);
 
 	color[0] = Vec4(_realColor.r / 255.0f, _realColor.g / 255.0f, _realColor.b / 255.0f, _realOpacity / 255.0f);
 	color[1] = Vec4(_realColor.r / 255.0f, _realColor.g / 255.0f, _realColor.b / 255.0f, _realOpacity / 255.0f);
@@ -191,6 +193,9 @@ void ShaderNode::onDraw(const cocos2d::Mat4& transform, uint32_t /*flags*/)
 
 	glUniformMatrix4fv(uniform_wvp_matrix, 1, GL_FALSE, matWVP.m);
 
+	glUniform2f(uniform_center, getPosition().x, getPosition().y);
+
+	glUniform2f(uniform_size_div2, getContentSize().width / 2, getContentSize().height / 2);
 
 	//描画(前面)
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
