@@ -35,7 +35,7 @@ void main()
 
 	float col;
 
-	col = p.x / size_div2.x;
+	//col = p.x / size_div2.x;
 
 
 	//ç∂âEëŒèÃ
@@ -48,9 +48,28 @@ void main()
 
 	//â~
 	//col = sqrt(p.x*p.x + p.y*p.y) /size_div2.x ;
-	col = length(p) / size_div2.x;
+	//col = length(p) / size_div2.x;
 	//col = 1 - col;
 
-	gl_FragColor = vec4(col, col, col, 1);
+	//col = sign(col);
+	//col=step(0.0001f,col);
+
+	//âˆèb
+	float angle=atan(p.y,p.x);
+	float deg = abs(degrees(angle));
+	col = deg / 180.0f;
+	col = step(0.2,col);
+
+	//â~
+	float circle = length(p) / size_div2.x;
+	circle = 1 - circle;
+	circle = sign(circle);
+
+	//çáê¨
+	col *= circle;
+
+
+	gl_FragColor = vec4(1, 1, 0, col);
+	
 
 }

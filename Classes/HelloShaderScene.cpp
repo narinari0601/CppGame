@@ -74,7 +74,7 @@ bool HelloShader::init()
 	sprite->setColor(Color3B(0xff, 0x00, 0x00));
 	sprite->setScale(2.0f);
 	sprite->setPosition(Vec2(visibleSize.width/2 + origin.x + 200, visibleSize.height/2 + origin.y));
-	//this->addChild(sprite, 0);
+	this->addChild(sprite, 0);
 
 	// LayerColor‚ÌŽg—p—á
 	//LayerColor* layerColor = LayerColor::create(Color4B(255, 255, 0, 255), 500, 500);
