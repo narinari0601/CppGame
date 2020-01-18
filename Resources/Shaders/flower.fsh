@@ -35,8 +35,21 @@ void main()
 
 	float col;
 
-	col = p.x/size_div2;
+	col = p.x / size_div2.x;
 
+
+	//ç∂âEëŒèÃ
+	//col = abs(p.x/size_div2.x);
+	//col = 1 - col;
+
+	//è„â∫ëŒèÃ
+	//col = abs(p.y / size_div2.y);
+	//col = 1 - col;
+
+	//â~
+	//col = sqrt(p.x*p.x + p.y*p.y) /size_div2.x ;
+	col = length(p) / size_div2.x;
+	//col = 1 - col;
 
 	gl_FragColor = vec4(col, col, col, 1);
 

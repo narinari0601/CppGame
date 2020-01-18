@@ -82,9 +82,9 @@ bool HelloShader::init()
 
 	// ShaderNode‚ðì¬B•`‰æ—Dæ‚Í1
 	node = ShaderNode::create();
-	node->setContentSize(Size(700, 500));
+	node->setContentSize(Size(500, 500));
 	this->addChild(node, 1);
-	node->setPosition(300, 500);
+	node->setPosition(500, 500);
 	//node->setOpacity(128);
 	//MoveTo* action01=MoveTo::create(onTouchMoved)
 
