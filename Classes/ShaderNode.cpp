@@ -97,6 +97,10 @@ bool ShaderNode::init()
 
 	uniform_size_div2= glGetUniformLocation(m_pProgram->getProgram(), "size_div2");
 
+	uniform_time = glGetUniformLocation(m_pProgram->getProgram(), "time");
+
+	m_time = 0.0f;
+
 	return true;
 }
 
@@ -173,6 +177,11 @@ void ShaderNode::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
 	//matWVP = matProjection * matView * matWorld;
 	matWVP = matProjection * transform;
 
+	unsigned int total = _director->getTotalFrames();
+	
+	float inter = _director->getAnimationInterval();
+
+	m_time = total * inter;
 }
 
 void ShaderNode::onDraw(const cocos2d::Mat4& transform, uint32_t /*flags*/)
@@ -196,6 +205,8 @@ void ShaderNode::onDraw(const cocos2d::Mat4& transform, uint32_t /*flags*/)
 	glUniform2f(uniform_center, getPosition().x, getPosition().y);
 
 	glUniform2f(uniform_size_div2, getContentSize().width / 2, getContentSize().height / 2);
+
+	glUniform1f(uniform_time, m_time);
 
 	//•`‰æ(‘O–Ê)
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);

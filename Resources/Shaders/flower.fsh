@@ -4,6 +4,8 @@ uniform vec2 center;
 
 uniform vec2 size_div2;
 
+uniform float time;
+
 void main()
 {
     //Fw’è—p‚Ìˆê•Ï”
@@ -35,6 +37,8 @@ void main()
 
 	float col;
 
+	
+
 	//col = p.x / size_div2.x;
 
 
@@ -55,21 +59,29 @@ void main()
 	//col=step(0.0001f,col);
 
 	//‰öb
-	float angle=atan(p.y,p.x);
-	float deg = abs(degrees(angle));
-	col = deg / 180.0f;
-	col = step(0.2,col);
+	//float angle=atan(p.y,p.x);
+	//float deg = abs(degrees(angle));
+	//col = deg / 180.0f;
+	//col = step(0.2,col);
 
 	//‰~
-	float circle = length(p) / size_div2.x;
-	circle = 1 - circle;
-	circle = sign(circle);
+	//float circle = length(p) / size_div2.x;
+	//circle = 1 - circle;
+	//circle = sign(circle);
 
 	//‡¬
-	col *= circle;
+	//col *= circle;
+
+	//9_1
+	//col = time / 2.0f;
+
+	float w = sin(time * 3.14);
+	col = w;
+
+	col=w/2.0+0.5;
 
 
-	gl_FragColor = vec4(1, 1, 0, col);
+	gl_FragColor = vec4(col, col, col, 1);
 	
 
 }
