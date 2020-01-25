@@ -67,7 +67,7 @@ bool HelloShader::init()
 
 	Sprite* sprite;
 
-	//Director::getInstance()->setClearColor(Color4F(0.0f, 1.0f, 0.0f, 0.0f));
+	Director::getInstance()->setClearColor(Color4F(1.0f, 1.0f, 1.0f, 0.0f));
 
 	// Cocosのロゴスプライトを作成。描画優先は0
 	sprite = Sprite::create("HelloWorld.png");
