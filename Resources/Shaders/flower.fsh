@@ -36,7 +36,7 @@ void main()
 	vec2 p = gl_FragCoord.xy - center;
 
 	float col;
-
+	
 	
 
 	//col = p.x / size_div2.x;
@@ -51,7 +51,7 @@ void main()
 	//col = 1 - col;
 
 	//â~
-	//col = sqrt(p.x*p.x + p.y*p.y) /size_div2.x ;
+	//col = sqrt(p.x*p.x + p.y*p.y) /size_div2.x ;  //Å©Ç±Ç¡ÇøÇÊÇËlengthÇégÇ§Ç◊Ç´	
 	//col = length(p) / size_div2.x;
 	//col = 1 - col;
 
@@ -75,10 +75,30 @@ void main()
 	//9_1
 	//col = time / 2.0f;
 
-	float w = sin(time * 3.14);
-	col = w;
+	float angle = atan(p.y, p.x);
 
-	col=w/2.0+0.5;
+	float w;
+
+	w = sin(time * 3.14 - angle);
+	//w = sin(sin(time * 3.14) - angle * 4);
+    //w = cos(sin(time * 3.14) - angle * 4);
+	//w = sin(time * 3.14 - p.x / size_div2.x);
+	//w = sin(time * 3.14 - p.x / size_div2.x * 3.14);
+	//col = w;
+
+	//col = w / 2.0 + 0.5;
+
+
+	//9_1 Ç‚Ç¡ÇƒÇ›ÇÊÇ§
+	float col2 = length(p) / size_div2.x;
+	col2= 1 - col2;
+
+	//float s = sin(sin(time * 3.14) + 3.14 / 2) / 2.0 + 0.5;
+	float s = cos(sin(time * 3.14)) / 2.0 + 0.5;
+
+	col2 = col2 * s;
+
+	col = col2;
 
 
 	gl_FragColor = vec4(col, col, col, 1);

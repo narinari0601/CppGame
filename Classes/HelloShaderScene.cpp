@@ -67,14 +67,14 @@ bool HelloShader::init()
 
 	Sprite* sprite;
 
-	Director::getInstance()->setClearColor(Color4F(0.0f, 1.0f, 0.0f, 0.0f));
+	//Director::getInstance()->setClearColor(Color4F(0.0f, 1.0f, 0.0f, 0.0f));
 
 	// Cocosのロゴスプライトを作成。描画優先は0
 	sprite = Sprite::create("HelloWorld.png");
 	sprite->setColor(Color3B(0xff, 0x00, 0x00));
 	sprite->setScale(2.0f);
 	sprite->setPosition(Vec2(visibleSize.width/2 + origin.x + 200, visibleSize.height/2 + origin.y));
-	this->addChild(sprite, 0);
+	//this->addChild(sprite, 0);
 
 	// LayerColorの使用例
 	//LayerColor* layerColor = LayerColor::create(Color4B(255, 255, 0, 255), 500, 500);
