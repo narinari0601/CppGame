@@ -10,126 +10,117 @@ float u(float x ){ return (x > 0.0) ?1.0:0.0 ;}
 
 void main()
 {
-    //色指定用の一時変数
-    //float col = 0.5;
-	
-	//vec3 rgb = vec3(col,col,col);
-
-	//出力カラーを設定（１つずつ指定）
-	//gl_FragColor = vec4(col,col,col,1);
-
-	//gl_FragColor = vec4(rgb,1);
-
-	//gl_FragColor = vec4(rgb.xyz,1);
-
-	//gl_FragColor = vec4(rgb.xyz,0.1);
-
-	//gl_FragColor = vec4(0,rgb.yz,1);
-
-	//gl_FragColor = vec4(rgb.yz,rgb.xy);
-
-    //gl_FragColor *= v_color;  //シェーダーの出力にカラーをコピー
-
-	//7-1
-	//gl_FragColor = vec4(gl_FragCoord.y/720 ,0 ,gl_FragCoord.x/1280 ,1);
-
-
-	//7-2
+   
 	vec2 p = gl_FragCoord.xy - center;
 
 	float col;
+
+	float len;
+
+	len = length(p) / size_div2.x;
+
+
+	//課題
+
+
+	//円全体
+	col = len;         
+	col = 1 - col;      
+	col = step(0 , col);
+
+
+
+	//赤い部分
+	float red;
+
+	red = len;
+	red = 1 - red;
+	red = step(0.1 , red);
+
+
+	//中央の黒い輪の部分
+	float cBlack;
 	
-	
+	cBlack = len;
+	cBlack = 1 - len;
+	cBlack = abs(0.2 - len);  //中心から0.2離れたところを0にする
+	cBlack = 0.11 / cBlack;   //割る数が0<x<1のとき割られる数が大きくなることを利用
+	cBlack = step(1 , cBlack);
+	cBlack = 1 - cBlack;
 
-	col = p.x / size_div2.x;
+
+	//上の円
+	float up;
+	vec2 pUp = p - vec2(size_div2.x/3.05,size_div2.x/1.8);  
+	up = length(pUp) / size_div2.x;
+	up = 0.5 - up;
+
+	up = 0.1 / abs(0.06 - up);
+	up = step(1,up);
 
 
-	//左右対称
-	//col = abs(p.x/size_div2.x);
-	//col = 1 - col;
+	float upAngle;   //切り取る角度
+	upAngle = atan(pUp.y , pUp.x);    
+	upAngle = abs(degrees(upAngle) + 30); 
+	upAngle = upAngle / 180.0f;
+	upAngle = abs(upAngle);
+	upAngle = step(0.45,upAngle);
 
-	//上下対称
-	//col = abs(p.y / size_div2.y);
-	//col = 1 - col;
+	up *= upAngle;
+	up = 1 - up;
 
-	//円
-	//col = sqrt(p.x*p.x + p.y*p.y) /size_div2.x ;  //←こっちよりlengthを使うべき	
-	//col = length(p) / size_div2.x;
-	//col = 1 - col;
 
-	//col = sign(col);
-	//col=step(0.0001f,col);
+	//左の円
+	float left;
+	vec2 pLeft= p + vec2(size_div2.x/1.56 ,-size_div2.x / 80);
+	left = length(pLeft)/ size_div2.x;
+	left = 0.5 - left;
 
-	//怪獣
-	//float angle=atan(p.y,p.x);
-	//float deg = abs(degrees(angle));
-	//col = deg / 180.0f;
-	//col = step(0.2,col);
+	left = 0.1 / abs(0.06 - left);
+	left = step(1,left);
 
-	//円
-	//float circle = length(p) / size_div2.x;
-	//circle = 1 - circle;
-	//circle = sign(circle);
+	float lAngle;
+	lAngle = atan(pLeft.y,pLeft.x);
+	lAngle = abs(degrees(lAngle)-90);
+	lAngle = lAngle / 180.0f;
+	lAngle = abs(lAngle);
+	lAngle = step(0.45,lAngle);
+
+	left *= lAngle;
+	left = 1- left;
+
+
+	//右の円
+	float right;
+	vec2 pRight = p - vec2(size_div2.x/3.7,-size_div2.x/1.7);
+
+	right = length(pRight)/ size_div2.x;
+	right = 0.5 - right;
+	right = 0.1 / abs(0.06 - right);
+	right = step(1,right);
+
+	float rAngle;
+	rAngle = atan(pRight.y,pRight.x);
+	rAngle = abs(degrees(rAngle));
+	rAngle = rAngle / 180.0f;
+	rAngle = abs(rAngle);
+	rAngle = step(0.6,rAngle);
+	rAngle = 1-rAngle;
+
+	right *= rAngle;
+	right = 1- right;
+
+
 
 	//合成
-	//col *= circle;
-
-	//9_1
-	//col = time / 2.0f;
-
-	float angle = atan(p.y, p.x);
-
-	//float w;
-
-	//w = sin(time * 3.14 - angle);
-	//w = sin(sin(time * 3.14) - angle * 4);
-    //w = cos(sin(time * 3.14) - angle * 4);
-	//w = sin(time * 3.14 - p.x / size_div2.x);
-	//w = sin(time * 3.14 - p.x / size_div2.x * 3.14);
-	//col = w;
-
-	//col = w / 2.0 + 0.5;
-
-
-	//9_1 やってみよう
-	//float col2 = length(p) / size_div2.x;
-	//col2= 1 - col2;
-
-	//float s = sin(sin(time * 3.14) + 3.14 / 2) / 2.0 + 0.5;
-	//float s = cos(sin(time * 3.14)) / 2.0 + 0.5;
-
-	//col2 = col2 * s;
-
-	//col = col2;
+	red *= cBlack;
+	red *= up;
+	red *= left;
+	red *= right;
 
 
 
-	//9_2 花
-	p /= size_div2;
-
-	float a = atan(p.x,p.y);
-
-	float r= length(p);
-
-	float w = cos(3.14 * time - r * 2.0);
-
-	float h = 0.5 + 0.5 * cos(12.0 * a - w *7.0 + r * 8.0);
-
-	float d = 0.25 + 0.75 * pow(h , 1.0 * r) * (0.7 + 0.3 * w);
-
-	col = u(d - r) * sqrt(1.0 - r / d) * r * 2.5;
-
-	col *= 1.25 + 0.25 * cos((12.0 * a - w * 7.0 + r * 8.0) / 2.0);
-	col *= 1.0 - 0.35 * (0.5 + 0.5 * sin(r * 30.0)) * (0.5 + 0.5 * cos(12.0 * a - w * 7.0 + r * 8.0));
-
-	gl_FragColor = vec4(
-	    col,
-		col - h * 0.5 + r * 0.2 + 0.35 * h * (1 - r),
-		col - h * r + 0.1 * h *(1.0 - r),
-		1);
-
-
-	//gl_FragColor = vec4(col, col, col, 1);
+	gl_FragColor = vec4(red, 0, 0, col);
 	
 
 }

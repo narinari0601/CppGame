@@ -84,7 +84,7 @@ bool HelloShader::init()
 	node = ShaderNode::create();
 	node->setContentSize(Size(500, 500));
 	this->addChild(node, 1);
-	node->setPosition(500, 500);
+	node->setPosition(640, 360);
 	//node->setOpacity(128);
 	//MoveTo* action01=MoveTo::create(onTouchMoved)
 
@@ -96,7 +96,7 @@ bool HelloShader::init()
 	//node->addChild(spriteA);
 
 	//this -> addChild(spriteA, 2);
-	spriteA->setPosition(400, 300);
+	spriteA->setPosition(400, 500);
 
 	//Sprite* spriteB;
 	//Sprite* spriteC;
