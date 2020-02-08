@@ -67,7 +67,7 @@ bool HelloShader::init()
 
 	Sprite* sprite;
 
-	Director::getInstance()->setClearColor(Color4F(1.0f, 1.0f, 1.0f, 0.0f));
+	Director::getInstance()->setClearColor(Color4F(0.0f, 0.0f, 0.0f, 0.0f));
 
 	// Cocosのロゴスプライトを作成。描画優先は0
 	sprite = Sprite::create("HelloWorld.png");
@@ -81,10 +81,11 @@ bool HelloShader::init()
 	//this->addChild(layerColor, 2);
 
 	// ShaderNodeを作成。描画優先は1
-	node = ShaderNode::create();
-	node->setContentSize(Size(500, 500));
-	this->addChild(node, 1);
-	node->setPosition(500, 500);
+	//node = ShaderNode::create();
+	//node->setContentSize(Size(500, 500));
+	//this->addChild(node, 1);
+	//node->setPosition(500, 500);
+
 	//node->setOpacity(128);
 	//MoveTo* action01=MoveTo::create(onTouchMoved)
 
@@ -115,12 +116,37 @@ bool HelloShader::init()
 
 	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
 
+	//スプライト3Dの作成
+	m_pSprite3D = Sprite3D::create("orc/orc.c3t");
+	m_pSprite3D->setPosition(640, 360);
+	
+	m_pSprite3D->setScale(10.0f);
+	m_pSprite3D->setRotation3D(Vec3(0, 180, 0));
+
+	this->addChild(m_pSprite3D, 1);
+
+	//アニメーションデータを読み込む
+	animation01 = Animation3D::create("orc/orc.c3t");
+	animation02 = Animation3D::create("orc/orc_jump.c3t");
+
+	idol = Animate3D::create(animation01);
+	//jump = Animate3D::create(animation02);
+
+	repeat = RepeatForever::create(idol);
+
+	//m_pSprite3D->runAction(animate);
+	m_pSprite3D->runAction(repeat);
+
 	return true;
 }
 
 void HelloShader::menuCloseCallback(Ref* pSender)
 {
-	Director::getInstance()->end();
+	//Director::getInstance()->end();
+	m_pSprite3D->stopAllActions();
+
+	jump = Animate3D::create(animation02);
+	m_pSprite3D->runAction(jump);
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 	exit(0);
@@ -131,7 +157,8 @@ bool HelloShader::onTouchBegin(cocos2d::Touch * touch, cocos2d::Event * event)
 {
 	auto touchPos = touch->getLocation();
 
-	node->setPosition(touchPos);
+	//node->setPosition(touchPos);
+	m_pSprite3D->setPosition(touchPos);
 
 	return true;
 }
@@ -140,7 +167,8 @@ void HelloShader::onTouchMoved(cocos2d::Touch * touch, cocos2d::Event * event)
 {
 	auto touchPos = touch->getLocation();
 
-	node ->setPosition(touchPos);
+	//node ->setPosition(touchPos);
+	m_pSprite3D->setPosition(touchPos);
 }
 
 void HelloShader::onTouchEnded(cocos2d::Touch * touch, cocos2d::Event * event)

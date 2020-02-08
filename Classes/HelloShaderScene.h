@@ -24,4 +24,12 @@ public:
 	cocos2d::CustomCommand _customCommand;
 
 	cocos2d::Node* node;
+
+	cocos2d::Sprite3D* m_pSprite3D;
+
+	cocos2d::Animation3D* animation01;
+	cocos2d::Animation3D* animation02;
+	cocos2d::Animate3D* idol;
+	cocos2d::Animate3D* jump;
+	cocos2d::RepeatForever* repeat;
 };
