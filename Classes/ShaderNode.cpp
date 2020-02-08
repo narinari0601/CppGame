@@ -58,7 +58,8 @@ bool ShaderNode::init()
 
 	m_pProgram = new GLProgram;
 
-	m_pProgram->initWithFilenames("shaders/flower.vsh", "shaders/flower.fsh");
+	//m_pProgram->initWithFilenames("shaders/flower.vsh", "shaders/flower.fsh");
+	m_pProgram->initWithFilenames("shaders/dynamic_light.vsh", "shaders/dynamic_light.fsh");
 	error = glGetError();
 
 	//attribute変数に属性インデックスを割り振る
@@ -69,7 +70,7 @@ bool ShaderNode::init()
 	m_pProgram->bindAttribLocation("a_color", GLProgram::VERTEX_ATTRIB_COLOR);
 	error = glGetError();
 	
-	//m_pProgram->bindAttribLocation("a_texCoord", GLProgram::VERTEX_ATTRIB_TEX_COORD);
+	m_pProgram->bindAttribLocation("a_texCoord", GLProgram::VERTEX_ATTRIB_TEX_COORD);
 	//error = glGetError();
 
 	//シェーダーをリンク
@@ -84,10 +85,10 @@ bool ShaderNode::init()
 	//Director::getInstance()->setClearColor(Color4F(0, 1, 0, 0));
 
 
-	//uniform_sampler = glGetUniformLocation(m_pProgram->getProgram(), "sampler");
+	uniform_sampler = glGetUniformLocation(m_pProgram->getProgram(), "sampler");
 
 
-	//m_pTexture = Director::getInstance()->getTextureCache()->addImage("banana00.png");
+	m_pTexture = Director::getInstance()->getTextureCache()->addImage("banana00.png");
 
 
 	uniform_wvp_matrix = glGetUniformLocation(m_pProgram->getProgram(), "u_wvp_matrix");
@@ -191,7 +192,7 @@ void ShaderNode::onDraw(const cocos2d::Mat4& transform, uint32_t /*flags*/)
 
 	m_pProgram->use();
 	m_pProgram->setUniformsForBuiltins(transform);
-	GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_COLOR);
+	GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_COLOR | GL::VERTEX_ATTRIB_FLAG_TEX_COORD);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 
@@ -207,6 +208,10 @@ void ShaderNode::onDraw(const cocos2d::Mat4& transform, uint32_t /*flags*/)
 	glUniform2f(uniform_size_div2, getContentSize().width / 2, getContentSize().height / 2);
 
 	glUniform1f(uniform_time, m_time);
+
+	glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 0, uv);
+	glUniform1i(uniform_sampler, 0);
+	GL::bindTexture2D(m_pTexture->getName());
 
 	//描画(前面)
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);

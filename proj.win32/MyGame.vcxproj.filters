@@ -48,10 +48,12 @@
     <None Include="..\Resources\Shaders\flower.fsh">
       <Filter>src</Filter>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="..\Resources\Shaders\flower.vsh">
+    <None Include="..\Resources\Shaders\flower.vsh" />
+    <None Include="..\Resources\Shaders\dynamic_light.fsh">
       <Filter>src</Filter>
-    </FxCompile>
+    </None>
+    <None Include="..\Resources\Shaders\dynamic_light.vsh">
+      <Filter>src</Filter>
+    </None>
   </ItemGroup>
 </Project>
